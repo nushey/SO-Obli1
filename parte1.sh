@@ -7,15 +7,12 @@
 
 
 app=true
-
-logged=false
-
 admin=false
 
-echo "Bienvenido al sistema, inicie seción"
-while [[ $app == true ]] ; do
+login(){
+    logged=false
     while [[ $logged == false ]] ; do
-        
+        result=false
         echo "Ingrese nombre usuario"
         read username
         echo "Ingrese contraseña"
@@ -34,11 +31,33 @@ while [[ $app == true ]] ; do
                 echo "Usuario o contraseña incorrectos"
             fi
         fi
-    done
+    done 
+}
 
+optionUser(){
+    askOption=false
+
+    while [[ $askOption == false ]] ; do 
+        echo "Opciones: "
+        echo "1. Listar mascotas disponibles en adopción"
+        echo "2. Adoptar mascota"
+        echo "3. Salir"
+
+        read option
+
+
+    done
+}
+
+echo "Bienvenido al sistema, inicie seción"
+
+while [[ $app == true ]] ; do
+    login
     if [[ $admin == true ]] ; then 
 
     else 
+        
+        
 
     fi
 
