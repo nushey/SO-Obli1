@@ -1,0 +1,2 @@
+003:Perro:Max:Macho:2:Guardían:10/11/2022
+004:Gato:Luna:Hembra:1:Curiosa:05/05/2023
