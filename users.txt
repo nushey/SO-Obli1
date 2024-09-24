@@ -1,1 +1,1 @@
-admin:admin:1:01/01/2000:1:admin
+admin:admin:1:00/00/0000:1:admin

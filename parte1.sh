@@ -13,25 +13,28 @@ login(){
     logged=false
     while [[ $logged == false ]] ; do
         result=false
-        echo "Ingrese nombre usuario"
+        echo -e "\nIngrese nombre usuario"
         read username
-        echo "Ingrese contraseña"
+        echo -e "\nIngrese contraseña"
         read -s password
         hayLog=false
         while IFS=: read -r nombre cedula telefono fecha esAdmin pass; do
-                    if [[ $username == $cedula ]] ; then
-                        if [[ $password == $pass ]] ; then
-                            hayLog=true
-                            if [[ $esAdmin == 1 ]] ; then
-                                echo -e "\nBienvenido admin"
-                                admin=true
-                                logged=true
-                            else
-                                echo -e "\nBienvenido user"
-                                logged=true
-                            fi
-                        fi
+            echo "HOLAAAA"
+            if [[ $username == $cedula ]] ; then
+                echo -e "\n\nUSUARIO ENCONTRADO\n\n"
+                if [[ $password == $pass ]] ; then
+                    echo -e "CONTRASENA CORRECTA\n\n"
+                    hayLog=true
+                    if [[ $esAdmin == 1 ]] ; then
+                        echo -e "\nBienvenido admin"
+                        admin=true
+                        logged=true
+                    else
+                        echo -e "\nBienvenido user"
+                        logged=true
                     fi
+                fi
+            fi
         done < users.txt
         if [[ $hayLog == false ]] ; then
             echo -e "\nUsuario o contraseña incorrectos\n"
