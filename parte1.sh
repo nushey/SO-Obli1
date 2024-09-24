@@ -18,21 +18,21 @@ login(){
         echo "Ingrese contraseña"
         read -s password
         hayLog=false
-        while IFS=: read -r nombre cedula telefono fecha esAdmin pass; do
-                    if [[ $username == $cedula ]] ; then
-                        if [[ $password == $pass ]] ; then
-                            hayLog=true
-                            if [[ $esAdmin == 1 ]] ; then
-                                echo -e "\nBienvenido admin"
-                                admin=true
-                                logged=true
-                            else
-                                echo -e "\nBienvenido user"
-                                logged=true
-                            fi
-                        fi
+        while IFS=: read -r nombre cedula tel fecha tipo pass ; do
+            if [[ $username == $nombre ]] ; then
+                if [[ $password == $pass ]] ; then
+                    hayLog=true
+                    if [[ $esAdmin == 1 ]] ; then
+                        echo -e "\nBienvenido admin"
+                        admin=true
+                        logged=true
+                    else
+                        echo -e "\nBienvenido user"
+                        logged=true
                     fi
-        done < users.txt
+                fi
+            fi
+        done < users.txt 
         if [[ $hayLog == false ]] ; then
             echo -e "\nUsuario o contraseña incorrectos\n"
         fi
@@ -128,9 +128,9 @@ registrarUsuario(){
     fi
 }
 
-registroMascota(){
+# registroMascota(){
     
-}
+# }
 
 echo "Bienvenido al sistema, inicie sesión"
 
