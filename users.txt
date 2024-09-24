@@ -1,4 +1,1 @@
 admin:admin:1:01/01/2000:1:admin
-Emi:1:1:01/10/2002:1:1
-hola:hola:ahola:11/11/1111:2:32
-prueba2:12:098:21/12/1212:2:hola

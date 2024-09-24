@@ -129,7 +129,56 @@ registrarUsuario(){
 }
 
 registroMascota(){
-    
+    esValido=false
+    while [[ $esValido == false ]] ; do
+        read -p "\n Ingrese numero identificador:" numId
+        if [[ $numId =~ [0-9]+$ ]] ; then
+            esValido=true
+        else
+            echo -e "\nEl identificador debe ser un numero natural"
+        fi
+    done
+    yaExisteM=false
+    while IFS=: read -r idM tipoM nombreM sexoM edadM descM fechaIng; do
+        if [[ $numId == $idM ]] ; then
+            yaExisteM=true
+        fi
+    done < mascotas.txt
+    if [[ $yaExiste == false ]] ; then
+        echo -e "\nIngrese el tipo de la mascota:"
+        read tipoM
+        echo -e "\nIngrese el nombre de la mascota:"
+        read nombreM
+        echo -e "\nIngrese el sexo de la mascota:"
+        read sexoM
+        valid=false
+        while [[ $valid == false ]] ; do
+            echo -e "\nIngrese la edad de la mascota:"
+            read edadM
+            if [[ $edadM =~ [0-9]+$ ]] ; then
+                if [[ $edad > 0 ]] ; then
+                    valid=true
+                fi
+            fi    
+            if [[ $valid == false ]] ; then
+                echo -e "\nIngrese una edad valida mayor a 0"
+            fi
+        done
+        echo -e "\nIngrese una descripcion de la mascota:"
+        read descM
+        validDate=false
+        while [[ $validDate == false ]] ; do
+            echo -e "\nIngrese la fecha de ingreso de la mascota:"
+            read newDate
+            if [[ $newDate =~ ^([0-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/[0-9]{4}$ ]] ; then
+                validDate=true
+            else
+                echo -e "\nIngrese una fecha valida en formato dd/mm/aaaa"
+            fi
+        done
+    else
+        echo -e "\nYa existe una mascota registrada con ese identificador"
+    fi
 }
 
 echo "Bienvenido al sistema, inicie sesión"
