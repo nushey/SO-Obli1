@@ -13,31 +13,49 @@ login(){
     logged=false
     while [[ $logged == false ]] ; do
         result=false
-        read -p "Ingrese nombre usuario: " username
-        read -p "Ingrese contraseña: " password
-        if [[ $username == "admin" && $password == "admin" ]] ; then
-            echo "Bienvenido admin"
-            admin=true
+        echo "Ingrese nombre usuario"
+        read username
+        echo "Ingrese contraseña"
+        read -s password
+        credentials=$(grep "$username:$password:$type" users.txt)
+        if [[ $credentials != "" ]] ; then
             logged=true
-        else
-            credentials=$(grep "$username:$password" users.txt)
-
-            if [[ "$username:$password" == "$credentials" ]] ; then
-                echo "Bienvenido user"
-                logged=true
+            hayLog=true
+            if [[ $type == "admin" ]] ; then
+                admin=true
+                echo -e "\nBienvenido administrador\n"
             else
-                echo "Usuario o contraseña incorrectos"
+                admin=false
+                echo -e "\nBienvenido $username\n"
             fi
+        else
+            echo -e "\nUsuario o contraseña incorrectos\n"
         fi
     done 
 }
-
 
 option(){
     askOption=false
     while [[ $askOption == false ]] ; do 
         if [[ $1 == true ]] ; then
-            echo ".."
+            echo -e "\nOpciones: "
+            echo "1. Registrar usuario"
+            echo "2. Registro de mascotas"
+            echo "3. Estadisticas de adopcion"
+            echo -e "4. Salir\n"
+            read -p "Ingrese opcion: " option
+            if [[ $option == 1 ]] ; then
+                registrarUsuario
+            elif [[ $option == 2 ]] ; then
+                registroMascota
+            elif [[ $option == 3 ]] ; then
+                askOption=true
+            elif [[ $option == 4 ]] ; then
+                salir
+                askOption=true
+            else
+                echo "error"
+            fi
         else 
             echo "Opciones: "
             echo "1. Listar mascotas disponibles en adopción"
@@ -57,7 +75,6 @@ option(){
             else
                 echo "Debe ingresar un valor valido"
             fi
-
         fi
     done
 }
@@ -111,11 +128,70 @@ adoptarMascotas(){
     done
     
 }
+registrarUsuario(){
+    prueba="no"
+    echo -e "\nIngrese el nombre del nuevo usuario:"
+    read newName
+    echo -e "\nIngrese la cedula del nuevo usuario:"
+    read newUser
+    yaExiste=false
+    while IFS=: read -r nombre cedula telefono fecha; do
+        if [[ $newUser == $cedula ]] ; then
+            yaExiste=true
+        fi
+    done < users.txt
+    if [[ $yaExiste == false ]] ; then
+        echo -e "\nIngrese el numero de telefono del nuevo usuario:"
+        read newNum
+        validDate=false
+        while [[ $validDate == false ]] ; do
+            echo -e "\nIngrese la fecha de nacimiento del nuevo usuario:"
+            read newDate
+            if [[ $newDate =~ ^([0-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/[0-9]{4}$ ]] ; then
+                validDate=true
+            else
+                echo -e "\nIngrese una fecha valida en formato dd/mm/aaaa"
+            fi
+        done
+        iguales=false
+        while [[ $iguales == false ]] ; do
+            echo -e "\nIngrese la contraseña:"
+            read -s newPass
+            echo -e "\nIngrese nuevamente la contraseña:"
+            read -s newPass2
+            if [[ $newPass == $newPass2 ]] ; then
+                iguales=true
+            else
+                echo -e "\nLas contraseñas no coinciden"
+            fi
+        done
+        validOption=false
+        while [[ $validOption == false ]] ; do
+            echo -e "\n¿Desea que el nuevo usuario sea administrador?"
+            echo "1. Si"
+            echo -e "2. No\n"
+            read -p "Ingrese opcion: " isAdmin
+            if [[ $isAdmin == 1 || $isAdmin == 2 ]] ; then
+                validOption=true
+            else
+                echo -e "\nIngrese una opcion valida"
+            fi
+        done
+        echo "$newUser:$newName:$newPass:$isAdmin:$newNum:$newDate" >> users.txt
+        echo -e "\nEl usuario fue registrado exitosamente"
+    else
+        echo -e "\nYa existe un usuario registrado con esa cedula"
+    fi
+}
+
+# registroMascota(){
+    
+# }
 
 salir(){
     app=false
-    echo "Hasta luego..."
 }
+
 ##########################################
 ##########################################
 ##########################################
