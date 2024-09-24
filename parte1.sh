@@ -8,10 +8,8 @@ login(){
     logged=false
     while [[ $logged == false ]] ; do
         result=false
-        echo "Ingrese nombre usuario"
-        read username
-        echo "Ingrese contraseña"
-        read -s password
+        read -p "Ingrese usuario: " username
+        read -p "Ingrese contraseña: " -s password
         credentials=$(grep "$username:$password:$type" users.txt)
         if [[ $credentials != "" ]] ; then
             logged=true
