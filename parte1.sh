@@ -17,24 +17,18 @@ login(){
         read username
         echo "Ingrese contraseña"
         read -s password
-        hayLog=false
-        while IFS=: read -r nombre cedula tel fecha tipo pass ; do
-            echo "nombre: $nombre cedula: $cedula tel: $tel fecha: $fecha tipo: $tipo pass: $pass"
-            if [ "$username" = "$nombre" ] ; then
-                if [ "$password" = "$pass" ] ; then
-                    hayLog=true
-                    if [[ $tipo == 1 ]] ; then
-                        echo -e "\nBienvenido admin"
-                        admin=true
-                        logged=true
-                    else
-                        echo -e "\nBienvenido user"
-                        logged=true
-                    fi
-                fi
+        credentials=$(grep "$username:$password:$type" users.txt)
+        if [[ $credentials != "" ]] ; then
+            logged=true
+            hayLog=true
+            if [[ $type == "admin" ]] ; then
+                admin=true
+                echo -e "\nBienvenido administrador\n"
+            else
+                admin=false
+                echo -e "\nBienvenido $username\n"
             fi
-        done < users.txt 
-        if [[ $hayLog == false ]] ; then
+        else
             echo -e "\nUsuario o contraseña incorrectos\n"
         fi
     done 
@@ -122,7 +116,7 @@ registrarUsuario(){
                 echo -e "\nIngrese una opcion valida"
             fi
         done
-        echo "$newName:$newUser:$newNum:$newDate:$isAdmin:$newPass" >> users.txt
+        echo "$newUser:$newName:$newPass:$isAdmin:$newNum:$newDate" >> users.txt
         echo -e "\nEl usuario fue registrado exitosamente"
     else
         echo -e "\nYa existe un usuario registrado con esa cedula"
