@@ -19,10 +19,11 @@ login(){
         read -s password
         hayLog=false
         while IFS=: read -r nombre cedula tel fecha tipo pass ; do
-            if [[ $username == $nombre ]] ; then
-                if [[ $password == $pass ]] ; then
+            echo "nombre: $nombre cedula: $cedula tel: $tel fecha: $fecha tipo: $tipo pass: $pass"
+            if [ "$username" = "$nombre" ] ; then
+                if [ "$password" = "$pass" ] ; then
                     hayLog=true
-                    if [[ $esAdmin == 1 ]] ; then
+                    if [[ $tipo == 1 ]] ; then
                         echo -e "\nBienvenido admin"
                         admin=true
                         logged=true
