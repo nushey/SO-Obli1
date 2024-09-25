@@ -10,10 +10,12 @@ login(){
         result=false
         read -p "Ingrese usuario: " username
         read -p "Ingrese contraseña: " -s password
-        credentials=$(grep "$username:$password:$type" users.txt)
+        credentials=$(grep "$username:$password" users.txt)
         if [[ $credentials != "" ]] ; then
+            type=$(echo $credentials | cut -d':' -f 4)
             logged=true
             hayLog=true
+            echo $type
             if [[ $type == "admin" ]] ; then
                 admin=true
                 echo -e "\nBienvenido administrador\n"
@@ -140,6 +142,7 @@ registrarUsuario(){
         while [[ $validDate == false ]] ; do
             echo -e "\nIngrese la fecha de nacimiento del nuevo usuario:"
             read newDate
+            #format "%d/%m/%Y"
             if [[ $newDate =~ ^([0-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/[0-9]{4}$ ]] ; then
                 validDate=true
             else
@@ -163,14 +166,19 @@ registrarUsuario(){
             echo -e "\n¿Desea que el nuevo usuario sea administrador?"
             echo "1. Si"
             echo -e "2. No\n"
-            read -p "Ingrese opcion: " isAdmin
-            if [[ $isAdmin == 1 || $isAdmin == 2 ]] ; then
+            read -p "Ingrese opcion: " type
+            if [[ $type == 1 || $type == 2 ]] ; then
+                if [[ $type == 1 ]] ; then
+                    type="admin"
+                else
+                    type="user"
+                fi
                 validOption=true
             else
                 echo -e "\nIngrese una opcion valida"
             fi
         done
-        echo "$newUser:$newName:$newPass:$isAdmin:$newNum:$newDate" >> users.txt
+        echo "$newUser:$newName:$newPass:$type:$newNum:$newDate" >> users.txt
         echo -e "\nEl usuario fue registrado exitosamente"
     else
         echo -e "\nYa existe un usuario registrado con esa cedula"
