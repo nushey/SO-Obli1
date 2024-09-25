@@ -44,7 +44,7 @@ option(){
             elif [[ $option == 2 ]] ; then
                 registroMascota
             elif [[ $option == 3 ]] ; then
-                askOption=true
+                estadisticas
             elif [[ $option == 4 ]] ; then
                 salir
                 askOption=true
@@ -107,15 +107,20 @@ adoptarMascotas(){
             # Se elimina la mascota de la lista de mascotas
             sed -i "/^$id_mascota:/d" mascotas.txt #-i es para modificar el archivo y /d es para eliminar la linea
 
-            # Formato: NOMBRE_MASCOTA:ID_MASCOTA:FECHA(dd/mm/yyyy)
+            # Formato: id:tipo:nombre:sexo:edad:descripcion:fecha_ingreso:fecha_adopcion
             # Seleccionar nombre e id de mascota
             # -d es para indicar el delimitador y -f es para indicar el campo
             nombre_mascota=$(echo $mascota | cut -d':' -f 3)
+            tipo_mascota=$(echo $mascota | cut -d':' -f 2)
             id_mascota=$(echo $mascota | cut -d':' -f 1)
-            fecha=$(date +"%d/%m/%Y")
+            sexo_mascota=$(echo $mascota | cut -d':' -f 4)
+            edad_mascota=$(echo $mascota | cut -d':' -f 5)
+            descripcion_mascota=$(echo $mascota | cut -d':' -f 6)
+            fechaIngreso=$(echo $mascota | cut -d':' -f 7)
+            fechaAdop=$(date +"%d/%m/%Y")
 
             # Se guarda la mascota en el archivo de adopciones
-            echo "$nombre_mascota:$id_mascota:$fecha" >> adopciones.txt
+            echo "$id_mascota:$tipo_mascota:$nombre_mascota:$sexo_mascota:$edad_mascota:$descripcion_mascota:$fechaIngreso:$fechaAdop" >> adopciones.txt
 
         else
             echo "No se encontro la mascota"
@@ -188,6 +193,76 @@ registrarUsuario(){
 # registroMascota(){
     
 # }
+
+estadisticas(){
+    declare -A noAdoptados
+    declare -A adoptados
+
+    # Contar los animales no adoptados
+    while IFS=: read -r id tipo nombre sexo edad desc fecIngreso; do
+        noAdoptados[$tipo]=$((noAdoptados[$tipo]+1))
+    done < mascotas.txt
+
+    # Contar los animales adoptados
+    while IFS=: read -r id tipo nombre sexo edad desc fecIngreso fecAdop; do
+        found=$(grep "^$id:" adopciones.txt)
+        if [[ $found != "" ]] ; then
+            adoptados[$tipo]=$((adoptados[$tipo]+1))
+        fi
+    done < adopciones.txt
+
+    echo "Porcentajes de adopciones: "
+    for tipo in "${!noAdoptados[@]}"; do
+        total=$((noAdoptados[$tipo] + adoptados[$tipo]))
+        if [[ $total -gt 0 ]]; then
+            porcentaje=$((adoptados[$tipo] * 100 / total))
+            echo "$tipo: $porcentaje%"
+        else
+            echo "$tipo: 0%"
+        fi
+    done
+
+    # Determinar en que mes se realizan mas adopciones
+    meses=(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre)
+    adopcionesMes=(0 0 0 0 0 0 0 0 0 0 0 0)
+    while IFS=: read -r id tipo nombre sexo edad desc fecIngreso fecAdopcion; do
+        mes=$(echo $fecAdopcion | cut -d'/' -f 2)
+        # Sacar 0 si el mes es menor a 10
+        mes=$(echo $mes | sed 's/^0*//')
+        adopcionesMes[$((mes-1))]=$((${adopcionesMes[$((mes-1))]}+1))
+    done < adopciones.txt
+
+    max=0
+    mes=""
+    for i in {0..11} ; do
+        if [[ ${adopcionesMes[$i]} -gt $max ]] ; then
+            max=${adopcionesMes[$i]}
+            mes=${meses[$i]}
+        fi
+    done
+
+    if [[ $max -gt 0 ]] ; then
+        echo "El mes con mas adopciones es $mes"
+    else
+        echo "No hay adopciones"
+    fi
+
+    # Edad promedio de los animales adoptados
+    totalEdad=0
+    totalAnimales=0
+    while IFS=: read -r id tipo nombre sexo edad desc fecIngreso fecAdopcion; do
+        totalEdad=$((totalEdad + edad))
+        totalAnimales=$((totalAnimales + 1))
+    done < adopciones.txt
+
+    if [[ $totalAnimales -gt 0 ]] ; then
+        edadPromedio=$((totalEdad / totalAnimales))
+        echo "La edad promedio de los animales adoptados es $edadPromedio"
+    else
+        echo "No hay animales adoptados"
+    fi
+      
+}
 
 salir(){
     app=false

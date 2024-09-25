@@ -1,2 +1,4 @@
-Luna:004:20/09/2024
-Rocky:005:20/09/2024
+004:Perro:Luna:Hembra:2:Curiosa:05/05/2023:25/09/2024
+014:Gato:Chloe:Hembra:6:Astuta:14/04/2021:25/09/2024
+013:Gato:Lucy:Hembra:6:Enérgica:22/11/2023:25/09/2024
+009:Gato:Oliver:Macho:6:Curioso:10/10/2023:25/09/2024

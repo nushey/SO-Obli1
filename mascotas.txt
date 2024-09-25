@@ -1,2 +1,8 @@
 003:Perro:Max:Macho:2:Guardían:10/11/2022
-004:Gato:Luna:Hembra:1:Curiosa:05/05/2023
+005:Hámster:Nina:Hembra:1:Juguetona:12/12/2022
+006:Perro:Rocky:Macho:3:Leal:15/01/2021
+007:Gato:Simba:Macho:2:Independiente:20/03/2022
+008:Perro:Bella:Hembra:4:Amigable:30/07/2020
+010:Hámster:Leo:Macho:2:Activo:25/08/2021
+011:Perro:Luna:Hembra:3:Protectora:05/09/2020
+012:Gato:Milo:Macho:2:Tranquilo:18/02/2022
