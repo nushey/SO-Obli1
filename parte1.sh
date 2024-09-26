@@ -132,7 +132,7 @@ registrarUsuario() {
     echo -e "\nIngrese la cedula del nuevo usuario:"
     read newUser
     yaExiste=false
-    while IFS=: read -r nombre cedula telefono fecha; do
+    while IFS=: read -r cedula nombre contrasena tipo telefono fecha; do
         if [[ $newUser == $cedula ]]; then
             yaExiste=true
         fi
