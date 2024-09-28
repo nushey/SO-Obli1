@@ -180,7 +180,7 @@ registrarUsuario() {
                 echo -e "\nIngrese una opcion valida"
             fi
         done
-        echo "$newUser:$newName:$newPass:$type:$newNum:$newDate" >>users.txt
+        echo "$newUser:$newName:$newPass:$type:$newNum:$newDate" >> users.txt
         echo -e "\nEl usuario fue registrado exitosamente"
     else
         echo -e "\nYa existe un usuario registrado con esa cedula"
@@ -190,7 +190,8 @@ registrarUsuario() {
 registroMascota(){
     esValido=false
     while [[ $esValido == false ]] ; do
-        read -p "\n Ingrese numero identificador:" numId
+        echo -e "\nIngrese numero identificador:"
+        read numId
         if [[ $numId =~ [0-9]+$ ]] ; then
             esValido=true
         else
@@ -203,7 +204,7 @@ registroMascota(){
             yaExisteM=true
         fi
     done < mascotas.txt
-    if [[ $yaExiste == false ]] ; then
+    if [[ $yaExisteM == false ]] ; then
         echo -e "\nIngrese el tipo de la mascota:"
         read tipoM
         echo -e "\nIngrese el nombre de la mascota:"
@@ -215,7 +216,7 @@ registroMascota(){
             echo -e "\nIngrese la edad de la mascota:"
             read edadM
             if [[ $edadM =~ [0-9]+$ ]] ; then
-                if [[ $edad > 0 ]] ; then
+                if [[ $edadM -gt 0 ]] ; then
                     valid=true
                 fi
             fi    
@@ -225,16 +226,17 @@ registroMascota(){
         done
         echo -e "\nIngrese una descripcion de la mascota:"
         read descM
-        validDate=false
-        while [[ $validDate == false ]] ; do
+        validDateM=false
+        while [[ $validDateM == false ]] ; do
             echo -e "\nIngrese la fecha de ingreso de la mascota:"
-            read newDate
-            if [[ $newDate =~ ^([0-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/[0-9]{4}$ ]] ; then
-                validDate=true
+            read newDateM
+            if [[ $newDateM =~ ^([0-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/[0-9]{4}$ ]] ; then
+                validDateM=true
             else
                 echo -e "\nIngrese una fecha valida en formato dd/mm/aaaa"
             fi
         done
+        echo "$numId:$tipoM:$nombreM:$sexoM:$edadM:$descM:$newDateM" >> mascotas.txt
     else
         echo -e "\nYa existe una mascota registrada con ese identificador"
     fi

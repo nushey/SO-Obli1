@@ -6,3 +6,4 @@
 010:Hámster:Leo:Macho:2:Activo:25/08/2021
 011:Perro:Luna:Hembra:3:Protectora:05/09/2020
 012:Gato:Milo:Macho:2:Tranquilo:18/02/2022
+001:Perro:Sash:Macho:11:Timido:28/09/2024
