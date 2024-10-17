@@ -312,6 +312,16 @@ estadisticas() {
 
 }
 
+salir() {
+    app=false
+}
+
+cerrarSesion() {
+    admin=false
+    logged=false
+    echo -e "\nSesion cerrada"
+}
+
 echo "Bienvenido al sistema, inicie sesión"
 
 while [[ $app == true ]]; do

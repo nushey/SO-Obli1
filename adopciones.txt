@@ -2,3 +2,4 @@
 014:Gato:Chloe:Hembra:6:Astuta:14/04/2021:25/09/2024
 013:Gato:Lucy:Hembra:6:Enérgica:22/11/2023:25/09/2024
 009:Gato:Oliver:Macho:6:Curioso:10/10/2023:25/09/2024
+012:Gato:Milo:Macho:2:Tranquilo:18/02/2022:17/10/2024

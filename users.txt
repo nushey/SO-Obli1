@@ -1,4 +1,3 @@
-534345:admin:admin:admin:098212:01/01/2000
-523433:lucas:1234:user:092322:01/05/2005
-z:hola:hola:admin:89:31/02/2002
-z:user2:hola2:user:alskjf:12/12/2002
+12345:juan:juan1:admin:098534890:01/01/2000
+54321:pepe:pepe1:user:092322125:01/05/2005
+41252:felipe:FELIPE1:user:093562532:12/05/2004
