@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-admin:admin:1:00/00/0000:1:admin
-=======
 534345:admin:admin:admin:098212:01/01/2000
 523433:lucas:1234:user:092322:01/05/2005
 z:hola:hola:admin:89:31/02/2002
 z:user2:hola2:user:alskjf:12/12/2002
->>>>>>> master
