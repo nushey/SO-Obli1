@@ -108,10 +108,8 @@ procedure Main is
                Operand := Instruction mod 100;
 
                case OpCode is
-                  when 0 =>
-                     -- DEFAULT OPERATION 
+                  when 0 => -- DEFAULT OPERATION 
                      null;
-
                   when 1 =>
                      -- LOAD
                      Memory_Instance.Read (Operand, Value);
@@ -255,7 +253,7 @@ begin
 
    CPUs (0).Execute (1);
    CPUs (1).Execute (2);
-   delay 5.0;
+   delay 3.0;
    CPUs (0).Stop;
    CPUs (1).Stop;
 end Main;
