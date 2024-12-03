@@ -2,7 +2,7 @@ with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
 procedure Main is
-   Debug                : constant Boolean := False;
+   Debug                : constant Boolean := True;
    QuantityOfSemaphores : constant Integer := 15;
    MemorySize           : constant Integer := 127;
    JumpFlag             : Boolean := False;
@@ -247,7 +247,7 @@ begin
    Memory_Instance.Write (8, 327); -- ADD 27
    Memory_Instance.Write (9, 900); -- STATUS 
 
-   for i in 0 .. QuantityOfSemaphores loop
+   for i in 2 .. QuantityOfSemaphores loop
       Semaphores (i).Init (1);
    end loop;
 
